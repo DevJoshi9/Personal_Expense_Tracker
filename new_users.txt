@@ -1,0 +1,10 @@
+def create_new_account():
+print("\n--- Create New Account ---")
+
+username = input("Enter a new username: ")
+password = input("Enter a new password: ")
+
+with open("users.txt", "a") as file:
+    file.write(username + "," + password + "\n")
+
+print("Account created successfully!"
