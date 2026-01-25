@@ -1,3 +1,4 @@
+#----------add this code to menu----------
 def set_monthly_budget(username):
     month = input("Enter month (YYYY-MM): ")
     budget = float(input("Enter your monthly budget: "))
@@ -38,10 +39,10 @@ def add_expense(username):
     except FileNotFoundError:
         pass
 
-    # Alerts user if they go over budget
+    # Alerts the users if they go over budget
     if budget is not None:
         if total_spent > budget:
-            print(f"\nWARNING: You have exceeded your budget for {month}!")
+            print(f"\nWARNING!: You have gone OVER your budget for {month}!")
             print(f"Budget: £{budget:.2f}")
             print(f"Total Spent: £{total_spent:.2f}")
         else:
