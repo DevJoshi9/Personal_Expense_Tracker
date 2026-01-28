@@ -1,0 +1,5 @@
+alice,2026-01,food,120.50
+alice,2026-01,transport,50.00
+alice,2026-01,entertainment,80.00
+bob,2026-01,food,60.00
+bob,2026-01,other,40.00

@@ -1,20 +1,19 @@
-#----------add this code to menu----------
 def financial_report(username):
-    # ask the user which month they want the report for
+    # this is asking the user which month they want the report for
     month = input("Enter month (YYYY-MM): ")
 
-    # variables to keep track of totals
+    # the variables to keep track of totals
     total_spent = 0
     budget = 0
-    found_budget = False  # used to check if a budget exists
+    found_budget = False  # this is used to check if a budget has already been made
 
-    # variables for each expense category
+    # the variables for the expense category
     food = 0
     transport = 0
     entertainment = 0
     other = 0
 
-    # try to find the user's budget for the selected month
+    # this is to find the user's budget for the selected month
     try:
         file = open("budgets.txt", "r")
         for line in file:
@@ -49,30 +48,30 @@ def financial_report(username):
                     other += amount
         file.close()
     except FileNotFoundError:
-        # runs if the expenses file does not exist
+        # this shows if the expenses file does not exist
         print("No expenses file found")
 
-    # print the financial report
+    # this can print the financial report for the user to see after the program has run 
     print("\n--- Financial Report ---")
     print("Month:", month)
 
-    # show the budget if it was found
+    # this is to show the budget if it was found
     if found_budget:
         print("Budget: £", round(budget, 2))
     else:
         print("No budget set")
 
-    # show how much was spent in total
+    # this shows how much was spent in total
     print("Total spent: £", round(total_spent, 2))
 
-    # compare spending with budget
+    # compares spending with budget
     if found_budget:
         if total_spent > budget:
             print("You are over budget by £", round(total_spent - budget, 2))
         else:
             print("Money left: £", round(budget - total_spent, 2))
 
-    # print breakdown of expenses by category
+    # prints a breakdown of expenses by category
     print("\nCategory breakdown:")
     if food > 0:
         print("Food: £", round(food, 2))
