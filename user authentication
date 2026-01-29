@@ -1,0 +1,112 @@
+import hashlib
+import os
+
+USERS_FILE = "users.txt"
+
+
+def hash_password(password):
+    """Returns a hashed version of the password"""
+    return hashlib.sha256(password.encode()).hexdigest()
+
+
+def user_exists(username):
+    """Checks if a username already exists"""
+    if not os.path.exists(USERS_FILE):
+        return False
+
+    with open(USERS_FILE, "r") as file:
+        for line in file:
+            stored_user, _ = line.strip().split(",")
+            if stored_user == username:
+                return True
+    return False
+
+
+def register_user():
+    print("\n--- Register New Account ---")
+    username = input("Enter username: ")
+
+    if user_exists(username):
+        print("Username already exists. Please choose another.")
+        return
+
+    password = input("Enter password: ")
+    confirm_password = input("Confirm password: ")
+
+    if password != confirm_password:
+        print("Passwords do not match.")
+        return
+
+    hashed_password = hash_password(password)
+
+    with open(USERS_FILE, "a") as file:
+        file.write(f"{username},{hashed_password}\n")
+
+    print("Account created successfully!")
+
+
+def login_user():
+    print("\n--- Login ---")
+    username = input("Username: ")
+    password = input("Password: ")
+
+    hashed_password = hash_password(password)
+
+    if not os.path.exists(USERS_FILE):
+        print("No users registered yet.")
+        return None
+
+    with open(USERS_FILE, "r") as file:
+        for line in file:
+            stored_user, stored_pass = line.strip().split(",")
+            if stored_user == username and stored_pass == hashed_password:
+                print(f"Login successful. Welcome, {username}!")
+                return username
+
+    print("Invalid username or password.")
+    return None
+
+
+def main_menu(current_user):
+    """Menu shown after successful login"""
+    while True:
+        print(f"\n--- Main Menu ({current_user}) ---")
+        print("1. View Dashboard")
+        print("2. Logout")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            print("Dashboard coming soon...")
+        elif choice == "2":
+            print("Logged out successfully.")
+            break
+        else:
+            print("Invalid option.")
+
+
+def main():
+    logged_in_user = None
+
+    while True:
+        print("\n=== Personal Expense Tracker ===")
+        print("1. Register")
+        print("2. Login")
+        print("3. Exit")
+
+        choice = input("Choose an option: ")
+
+        if choice == "1":
+            register_user()
+        elif choice == "2":
+            logged_in_user = login_user()
+            if logged_in_user:
+                main_menu(logged_in_user)
+        elif choice == "3":
+            print("Goodbye!")
+            break
+        else:
+            print("Invalid option.")
+
+
+main()
