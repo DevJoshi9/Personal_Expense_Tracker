@@ -1,0 +1,52 @@
+import os
+
+# =========================
+# USER DATA DIRECTORY
+# =========================
+def get_user_directory(username):
+    path = f"data/{username}"
+    os.makedirs(path, exist_ok=True)
+    return path
+
+
+# =========================
+# ADD EXPENSE (PER USER)
+# =========================
+def add_expense(username):
+    month = input("Enter month (YYYY-MM): ")
+    category = input("Enter expense category: ")
+    amount = float(input("Enter amount spent: "))
+
+    user_dir = get_user_directory(username)
+    expense_file = f"{user_dir}/expenses.txt"
+
+    with open(expense_file, "a") as file:
+        file.write(f"{month},{category},{amount}\n")
+
+    print("Expense added successfully.")
+
+
+# =========================
+# VIEW EXPENSES (PER USER)
+# =========================
+def view_expenses(username):
+    user_dir = get_user_directory(username)
+    expense_file = f"{user_dir}/expenses.txt"
+
+    if not os.path.exists(expense_file):
+        print("No expenses recorded.")
+        return
+
+    print("\n--- Your Expenses ---")
+    with open(expense_file, "r") as file:
+        for line in file:
+            month, category, amount = line.strip().split(",")
+            print(f"{month} | {category} | £{amount}")
+
+
+# =========================
+# SIMPLE TEST RUN
+# =========================
+username = input("Enter username to test: ")
+add_expense(username)
+view_expenses(username)
