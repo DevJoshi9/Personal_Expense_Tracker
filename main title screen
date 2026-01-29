@@ -1,0 +1,22 @@
+def title_screen():
+    while True:
+        print("\n==============================")
+        print("  Personal Expense Tracker")
+        print("==============================")
+        print("1. Login")
+        print("2. Create Account")
+        print("3. Exit")
+
+        choice = input("Select an option: ")
+
+        if choice == "1":
+            user = login_user()
+            if user:
+                return user
+        elif choice == "2":
+            register_user()
+        elif choice == "3":
+            print("Thank you for using the Expense Tracker.")
+            return None
+        else:
+            print("Invalid selection. Please try again.")
